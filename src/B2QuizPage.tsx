@@ -3,7 +3,7 @@ import './B2QuizPage.css';
 import { sampleQuestions } from './b2Data';
 
 export default function B2QuizPage() {
-  const [activeTab, setActiveTab] = useState('quiz');
+  const [activeTab, setActiveTab] = useState('tips');
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number>>({});
   const [showExplanation, setShowExplanation] = useState<Record<number, boolean>>({});
@@ -56,17 +56,83 @@ export default function B2QuizPage() {
   return (
     <div className="b2-container">
       <div className="b2-header">
-        <h1>🚗 ÔN THI LÝ THUYẾT BẰNG LÁI Ô TÔ B2 & B1</h1>
-        <p>Hệ thống 600 câu hỏi chuẩn Bộ GTVT • Tích hợp Cẩm Nang Mẹo Tra Cứu Siêu Tốc & Đề Thi Thử 2026</p>
+        <h1>🚗 BỘ BÍ KÍP MẸO THI LÝ THUYẾT LÁI XE Ô TÔ HẠNG B (B1, B2, B)</h1>
+        <p>Tối Ưu Cho Bộ 600 Câu Hỏi Mới Nhất - Dễ Nhớ, Chọn Đúng 100%</p>
       </div>
 
       <div className="b2-nav-tabs">
+        <button className={'b2-tab-btn ' + (activeTab === 'tips' ? 'active' : '')} onClick={() => setActiveTab('tips')}>💡 Cẩm Nang Mẹo Giải Nhanh</button>
         <button className={'b2-tab-btn ' + (activeTab === 'quiz' ? 'active' : '')} onClick={() => setActiveTab('quiz')}>📝 Đề Thi Trắc Nghiệm Thử</button>
-        <button className={'b2-tab-btn ' + (activeTab === 'tips' ? 'active' : '')} onClick={() => setActiveTab('tips')}>💡 Cẩm Nang Mẹo Giải Nhanh B2</button>
         <button className={'b2-tab-btn ' + (activeTab === 'all' ? 'active' : '')} onClick={() => setActiveTab('all')}>📚 Danh Sách 600 Câu & Mẹo</button>
         <a href="./Meo_Thi_Ly_Thuyet_O_To_Bang_B_Chuan.pdf" target="_blank" rel="noopener noreferrer" className="b2-tab-btn" style={{ background: '#ecfdf5', color: '#047857', borderColor: '#a7f3d0', textDecoration: 'none' }}>📥 Tải PDF Mẹo Thi B2 Chuẩn</a>
       </div>
+      {activeTab === 'tips' && (
+        <div>
+          <div className="b2-tip-section">
+            <div className="b2-tip-title">🔥 PHẦN 1: MẸO TỪ KHÓA NHÌN LÀ CHỌN NGAY (ĐÚNG 100%)</div>
+            <table className="b2-table">
+              <thead><tr><th>Nhóm từ khóa xuất hiện</th><th>Quy tắc chọn nhanh & Lưu ý</th></tr></thead>
+              <tbody>
+                <tr><td><strong>1. Cấm tuyệt đối</strong></td><td className="b2-highlight-text">Thấy đáp án có cụm: <strong>Bị nghiêm cấm</strong> hoặc <strong>Không được phép / Không được...</strong> ➔ CHỌN NGAY.<br/><em>Ngoại lệ: Xe cảnh sát không phát tín hiệu còi/đèn ➔ Chọn: Được vượt khi đảm bảo an toàn.</em></td></tr>
+                <tr><td><strong>2. Hành vi chuẩn mực</strong></td><td>- Đáp án bắt đầu bằng: <strong>Chấp hành...</strong> hoặc <strong>Phải tuân thủ...</strong>.<br/>- Đáp án có: <strong>Về số thấp</strong>, <strong>Về số 1</strong>, <strong>Giảm tốc độ...</strong>, <strong>Đi về phía bên phải</strong>.<br/>- Đáp án có: <strong>Cơ quan có thẩm quyền cấp phép</strong>.</td></tr>
+                <tr><td><strong>3. Hiệu lệnh CSGT</strong></td><td>- CSGT giơ 1 tay thẳng đứng ➔ Chọn <strong>Ý 3</strong> (Tất cả dừng lại).<br/>- CSGT giơ 2 tay (hoặc 1 tay ngang) ➔ Chọn <strong>Ý 4</strong> (Trước/sau dừng, trái/phải đi).<br/>- CSGT đứng ở ngã tư trong sa hình ➔ Chọn luôn <strong>Ý 3</strong>.</td></tr>
+                <tr><td><strong>4. Đáp án Cả ý 1 và ý 2</strong></td><td>- Ưu tiên chọn khi hỏi về: Đạo đức người lái xe, Văn hóa giao thông, Trách nhiệm của chủ xe.<br/><em>Lưu ý: Không áp dụng nguyên tắc này cho các câu hỏi về Tốc độ hay Kỹ thuật lái xe.</em></td></tr>
+              </tbody>
+            </table>
+          </div>
 
+          <div className="b2-tip-section">
+            <div className="b2-tip-title">⚡ PHẦN 2: ĐỘ TUỔI, TỐC ĐỘ VÀ KHOẢNG CÁCH AN TOÀN</div>
+            <div className="b2-grid-2">
+              <div className="b2-card-tip">
+                <h4>🎯 Quy tắc độ tuổi GPLX (Tăng 3 tuổi/hạng)</h4>
+                <ul>
+                  <li><strong>18 tuổi:</strong> Hạng A1, A2, B1, B2</li>
+                  <li><strong>21 tuổi:</strong> Hạng C, FB2</li>
+                  <li><strong>24 tuổi:</strong> Hạng D, FC</li>
+                  <li><strong>27 tuổi:</strong> Hạng E, FD</li>
+                  <li><em>Khác biệt B1 & B2:</em> B1 <strong>KHÔNG</strong> kinh doanh vận tải; B2 <strong>CÓ</strong> kinh doanh vận tải.</li>
+                </ul>
+              </div>
+              <div className="b2-card-tip">
+                <h4>🛣️ Tốc độ tối đa trong khu đông dân cư</h4>
+                <ul>
+                  <li><strong>Đường đôi (có dải phân cách giữa):</strong> Max <strong className="b2-highlight-text">60 km/h</strong></li>
+                  <li><strong>Đường 2 chiều (không dải phân cách):</strong> Max <strong className="b2-highlight-text">50 km/h</strong></li>
+                </ul>
+              </div>
+            </div>
+            <div className="b2-card-tip" style={{ marginTop: '16px' }}>
+              <h4>📏 Khoảng cách an toàn tối thiểu (Đường khô ráo)</h4>
+              <p>V = 60 km/h ➔ <strong>35m</strong> | 60 &lt; V ≤ 80 km/h ➔ <strong>55m</strong> | 80 &lt; V ≤ 100 km/h ➔ <strong>70m</strong> | 100 &lt; V ≤ 120 km/h ➔ <strong>100m</strong></p>
+            </div>
+          </div>
+
+          <div className="b2-tip-section">
+            <div className="b2-tip-title">🚦 PHẦN 3: 5 BƯỚC THẦN THÁCH GIẢI BÀI TẬP SA HÌNH</div>
+            <div className="b2-grid-2">
+              <div className="b2-card-tip">
+                <h4>Thứ tự ưu tiên trong Sa Hình:</h4>
+                <ol style={{ margin: 0, paddingLeft: '20px', lineHeight: '1.7' }}>
+                  <li><strong>Bước 1: Xe đã vào giao lộ</strong> (Vượt qua vạch dừng ➔ Đi trước tiên).</li>
+                  <li><strong>Bước 2: Xe ưu tiên:</strong> Chữa cháy ➔ Quân sự ➔ Công an ➔ Cứu thương.</li>
+                  <li><strong>Bước 3: Đường ưu tiên:</strong> Xe nằm trên đường có biển báo ưu tiên đi trước.</li>
+                  <li><strong>Bước 4: Quyền bên phải trống:</strong> Xe nào bên phải không vướng xe khác ➔ Đi trước.</li>
+                  <li><strong>Bước 5: Hướng rẽ ưu tiên:</strong> Rẽ phải ➔ Đi thẳng ➔ Rẽ trái.</li>
+                </ol>
+              </div>
+              <div className="b2-card-tip">
+                <h4>💡 Mẹo sa hình nhìn hình đoán ý:</h4>
+                <ul>
+                  <li>Thấy xe công an / xe chữa cháy ➔ Chắc chắn đáp án đúng nằm ở <strong>Ý 1 hoặc Ý 2</strong>.</li>
+                  <li>Sa hình có hình tròn đỏ / vòng xoay ➔ Nhường đường cho xe <strong>bên trái</strong>. Không có vòng xoay ➔ Nhường xe <strong>bên phải</strong>.</li>
+                  <li>Sa hình gặp biển hình thoi ngược ➔ Xe bạn đang đứng trên <strong>đường không ưu tiên</strong>.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {activeTab === 'quiz' && (
         <div>
           <div className="b2-quiz-card">
@@ -140,52 +206,6 @@ export default function B2QuizPage() {
           </div>
         </div>
       )}
-
-      {activeTab === 'tips' && (
-        <div>
-          <div className="b2-tip-section">
-            <div className="b2-tip-title">🔥 PHẦN 1: MẸO TỪ KHÓA NHÌN LÀ CHỌN NGAY (ĐÚNG 100%)</div>
-            <table className="b2-table">
-              <thead><tr><th>Nhóm từ khóa xuất hiện</th><th>Quy tắc chọn nhanh & Lưu ý</th></tr></thead>
-              <tbody>
-                <tr><td><strong>1. Cấm tuyệt đối</strong></td><td className="b2-highlight-text">Thấy đáp án có cụm: <strong>Bị nghiêm cấm</strong> hoặc <strong>Không được phép / Không được...</strong> ➔ CHỌN NGAY.<br/><em>Ngoại lệ: Xe cảnh sát không phát tín hiệu còi/đèn ➔ Chọn: Được vượt khi đảm bảo an toàn.</em></td></tr>
-                <tr><td><strong>2. Hành vi chuẩn mực</strong></td><td>- Đáp án bắt đầu bằng: <strong>Chấp hành...</strong> hoặc <strong>Phải tuân thủ...</strong>.<br/>- Đáp án có: <strong>Về số thấp</strong>, <strong>Về số 1</strong>, <strong>Giảm tốc độ...</strong>, <strong>Đi về phía bên phải</strong>.<br/>- Đáp án có: <strong>Cơ quan có thẩm quyền cấp phép</strong>.</td></tr>
-                <tr><td><strong>3. Hiệu lệnh CSGT</strong></td><td>- CSGT giơ 1 tay thẳng đứng ➔ Chọn <strong>Ý 3</strong> (Tất cả dừng lại).<br/>- CSGT giơ 2 tay (hoặc 1 tay ngang) ➔ Chọn <strong>Ý 4</strong> (Trước/sau dừng, trái/phải đi).<br/>- CSGT đứng ở ngã tư trong sa hình ➔ Chọn luôn <strong>Ý 3</strong>.</td></tr>
-                <tr><td><strong>4. Đáp án Cả ý 1 và ý 2</strong></td><td>- Ưu tiên chọn khi hỏi về: Đạo đức người lái xe, trách nhiệm vận tải, văn hóa giao thông.<br/>- ❌ Tuyệt đối không chọn khi hỏi về: Tốc độ tối đa, nồng độ cồn, hoặc chứa các hành vi bị nghiêm cấm.</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div className="b2-grid-2">
-            <div className="b2-tip-section">
-              <div className="b2-tip-title">📊 PHẦN 2: QUY ĐỊNH CON SỐ KỸ THUẬT & ĐỘ TUỔI</div>
-              <ul style={{ paddingLeft: '20px', lineHeight: '1.8' }}>
-                <li><strong>Độ tuổi lái xe:</strong> 16T (Xe &lt; 50cc); 18T (Hạng A1, A2, B1, B2); 21T (Hạng C); 24T (Hạng D); 27T (Hạng E). <em>(Mẹo: Tăng +3 tuổi)</em>.</li>
-                <li><strong>Tuổi tối đa hạng E:</strong> Nam 55 tuổi, Nữ 50 tuổi.</li>
-                <li><strong>Thời gian lái xe:</strong> Lái liên tục tối đa <strong>4 giờ</strong>; Làm việc trong ngày tối đa <strong>10 giờ</strong>.</li>
-                <li><strong>Khoảng cách đỗ xe:</strong> Cách lề đường <strong>≤ 0.25 m</strong>; Cách xe đối diện đỗ <strong>≥ 20 m</strong>; Cách đường sắt <strong>≥ 5 m</strong>.</li>
-                <li><strong>Kéo xe & Cáp nối:</strong> Dây cáp nối kéo dài <strong>3m - 5m</strong>; Hệ thống hãm hỏng phải dùng <strong>thanh nối cứng</strong>.</li>
-                <li><strong>Mẹo kỹ thuật số:</strong> Tăng số chọn <strong>Ý 1</strong> (Tăng 1); Giảm số chọn <strong>Ý 2</strong> (Giảm 2).</li>
-                <li><strong>Nồng độ cồn:</strong> Nghiêm cấm tuyệt đối người điều khiển phương tiện có nồng độ cồn.</li>
-              </ul>
-            </div>
-
-            <div className="b2-tip-section">
-              <div className="b2-tip-title">⚡ KHOẢNG CÁCH AN TOÀN TỐI THIỂU</div>
-              <table className="b2-table">
-                <thead><tr><th>Vận tốc xe (km/h)</th><th>Khoảng cách an toàn tối thiểu (m)</th></tr></thead>
-                <tbody>
-                  <tr><td><strong>V = 60 km/h</strong></td><td className="b2-highlight-text">35 m</td></tr>
-                  <tr><td><strong>60 &lt; V ≤ 80 km/h</strong></td><td className="b2-highlight-text">55 m</td></tr>
-                  <tr><td><strong>80 &lt; V ≤ 100 km/h</strong></td><td className="b2-highlight-text">70 m</td></tr>
-                  <tr><td><strong>100 &lt; V ≤ 120 km/h</strong></td><td className="b2-highlight-text">100 m</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      )}
-
       {activeTab === 'all' && (
         <div className="b2-tip-section">
           <div className="b2-tip-title" style={{ justifyContent: 'space-between' }}>
