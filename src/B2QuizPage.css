@@ -3,18 +3,18 @@
   max-width: 1100px;
   margin: 0 auto;
   padding: 80px 20px 40px;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Manrope', system-ui, sans-serif;
   color: #1f2937;
 }
 
 .b2-header {
   text-align: center;
   margin-bottom: 30px;
-  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  background: #1e3a8a;
   color: white;
   padding: 30px 20px;
   border-radius: 16px;
-  box-shadow: 0 10px 25px -5px rgba(30, 58, 138, 0.3);
+  box-shadow: 0 10px 25px -5px rgba(30, 58, 138, 0.3), inset 3px 0 0 #F59E0B;
 }
 
 .b2-header h1 {
@@ -46,7 +46,7 @@
   font-weight: 700;
   font-size: 0.95rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.22,1,0.36,1);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -62,7 +62,7 @@
   background: #2563eb;
   border-color: #2563eb;
   color: white;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3), inset 3px 0 0 #F59E0B;
 }
 
 .b2-quiz-card {
@@ -70,7 +70,7 @@
   border-radius: 16px;
   border: 1px solid #e2e8f0;
   padding: 30px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05), inset 3px 0 0 #F59E0B;
   margin-bottom: 30px;
 }
 
@@ -78,7 +78,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #f1f5f9;
+  ;
   padding-bottom: 15px;
   margin-bottom: 20px;
   flex-wrap: wrap;
@@ -127,7 +127,7 @@
   border: 2px solid #e2e8f0;
   border-radius: 12px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.22,1,0.36,1);
   font-size: 1rem;
   line-height: 1.5;
   display: flex;
@@ -161,7 +161,7 @@
 
 .b2-explanation-box {
   background: #f0fdf4;
-  border-left: 4px solid #10b981;
+  ;
   padding: 16px;
   border-radius: 0 12px 12px 0;
   margin-top: 20px;
@@ -175,7 +175,7 @@
   align-items: center;
   margin-top: 25px;
   padding-top: 20px;
-  border-top: 1px solid #f1f5f9;
+  ;
 }
 
 .b2-btn {
@@ -184,7 +184,7 @@
   font-weight: 700;
   cursor: pointer;
   border: none;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.22,1,0.36,1);
   font-size: 0.95rem;
 }
 
@@ -221,7 +221,7 @@
   border: 1px solid #e2e8f0;
   padding: 28px;
   margin-bottom: 24px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04), inset 3px 0 0 #F59E0B;
 }
 
 .b2-tip-title {
@@ -232,7 +232,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  border-bottom: 2px solid #e0f2fe;
+  ;
   padding-bottom: 10px;
 }
 
@@ -313,7 +313,7 @@
   font-weight: 700;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.15s cubic-bezier(0.22,1,0.36,1);
 }
 
 .b2-q-num.current {

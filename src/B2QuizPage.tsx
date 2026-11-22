@@ -1,6 +1,104 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import type { ReactNode } from 'react';
 import './B2QuizPage.css';
 import { sampleQuestions } from './b2Data';
+
+function useInView<T extends HTMLElement>(rootMargin = '0px 0px 8px 0px') {
+  const ref = useRef<T>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin, threshold: 0.25 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [rootMargin]);
+
+  return { ref, inView };
+}
+
+function useCountUp(target: number, inView: boolean, duration = 1400) {
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    let raf = 0;
+    const start = performance.now();
+
+    const step = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      setValue(Math.round(progress * target));
+      if (progress < 1) {
+        raf = requestAnimationFrame(step);
+      }
+    };
+
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [inView, target, duration]);
+
+  return value;
+}
+
+interface RevealProps {
+  children: ReactNode;
+  stagger?: boolean;
+  delay?: number;
+}
+
+function Reveal({ children, stagger = false, delay = 0 }: RevealProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setVisible(true);
+            observer.disconnect();
+          }
+        }
+      },
+      { rootMargin: '0px', threshold: 0.15 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!visible) return;
+    const el = ref.current;
+    if (!el) return;
+    if (stagger) {
+      const children = Array.from(el.children) as HTMLElement[];
+      children.forEach((child, index) => {
+        child.style.transitionDelay = `${delay + index * 70}ms`;
+      });
+    }
+  }, [visible, delay, stagger]);
+
+  return (
+    <div
+      ref={ref}
+      style={stagger ? { transitionDelay: `${delay}ms` } : undefined}
+      className={`b2-reveal${visible ? ' is-visible' : ''}`}
+    >
+      {children}
+    </div>
+  );
+}
 
 export default function B2QuizPage() {
   const [activeTab, setActiveTab] = useState('tips');
@@ -56,20 +154,39 @@ export default function B2QuizPage() {
   return (
     <div className="b2-container">
       <div className="b2-header">
-        <h1>🚗 BỘ BÍ KÍP MẸO THI LÝ THUYẾT LÁI XE Ô TÔ HẠNG B (B1, B2, B)</h1>
-        <p>Tối Ưu Cho Bộ 600 Câu Hỏi Mới Nhất - Dễ Nhớ, Chọn Đúng 100%</p>
+        <div className="b2-header-box">
+          <h1 className="b2-header-title">🚗 BỘ BÍ KÍP MẸO THI LÝ THUYẾT LÁI XE Ô TÔ HẠNG B (B1, B2, B)</h1>
+          <p className="b2-header-sub">Tối Ưu Cho Bộ 600 Câu Hỏi Mới Nhất - Dễ Nhớ, Chọn Đúng 100%</p>
+        </div>
+        <div className="b2-stats" ref={statsRef}>
+          <div className="b2-stat">
+            <span className="b2-stat-num">{totalCount}</span>
+            <span className="b2-stat-label">Câu</span>
+          </div>
+          <div className="b2-stat">
+            <span className="b2-stat-num">5</span>
+            <span className="b2-stat-label">Chủ đề</span>
+          </div>
+          <div className="b2-stat">
+            <span className="b2-stat-num">22</span>
+            <span className="b2-stat-label">Phút</span>
+          </div>
+        </div>
       </div>
 
       <div className="b2-nav-tabs">
-        <button className={'b2-tab-btn ' + (activeTab === 'tips' ? 'active' : '')} onClick={() => setActiveTab('tips')}>💡 Cẩm Nang Mẹo Giải Nhanh</button>
-        <button className={'b2-tab-btn ' + (activeTab === 'quiz' ? 'active' : '')} onClick={() => setActiveTab('quiz')}>📝 Đề Thi Trắc Nghiệm Thử</button>
-        <button className={'b2-tab-btn ' + (activeTab === 'all' ? 'active' : '')} onClick={() => setActiveTab('all')}>📚 Danh Sách 600 Câu & Mẹo</button>
-        <a href="./Meo_Thi_Ly_Thuyet_O_To_Bang_B_Chuan.pdf" target="_blank" rel="noopener noreferrer" className="b2-tab-btn" style={{ background: '#ecfdf5', color: '#047857', borderColor: '#a7f3d0', textDecoration: 'none' }}>📥 Tải PDF Mẹo Thi B2 Chuẩn</a>
+        <Reveal stagger>
+          <button className={'b2-tab-btn ' + (activeTab === 'tips' ? 'active' : '')} onClick={() => setActiveTab('tips')}>💡 Cẩm Nang Mẹo Giải Nhanh</button>
+          <button className={'b2-tab-btn ' + (activeTab === 'quiz' ? 'active' : '')} onClick={() => setActiveTab('quiz')}>📝 Đề Thi Trắc Nghiệm Thử</button>
+          <button className={'b2-tab-btn ' + (activeTab === 'all' ? 'active' : '')} onClick={() => setActiveTab('all')}>📚 Danh Sách 600 Câu & Mẹo</button>
+          <a href="./Meo_Thi_Ly_Thuyet_O_To_Bang_B_Chuan.pdf" target="_blank" rel="noopener noreferrer" className="b2-tab-btn" style={{ background: '#ecfdf5', color: '#047857', borderColor: '#a7f3d0', textDecoration: 'none' }}>📥 Tải PDF Mẹo Thi B2 Chuẩn</a>
+        </Reveal>
       </div>
       {activeTab === 'tips' && (
         <div>
-          <div className="b2-tip-section">
-            <div className="b2-tip-title">🔥 PHẦN 1: MẸO TỪ KHÓA NHÌN LÀ CHỌN NGAY (ĐÚNG 100%)</div>
+          <Reveal delay={0} stagger>
+            <div className="b2-tip-section">
+              <div className="b2-tip-title">🔥 PHẦN 1: MẸO TỪ KHÓA NHÌN LÀ CHỌN NGAY (ĐÚNG 100%)</div>
             <table className="b2-table">
               <thead><tr><th>Nhóm từ khóa xuất hiện</th><th>Quy tắc chọn nhanh & Lưu ý</th></tr></thead>
               <tbody>
